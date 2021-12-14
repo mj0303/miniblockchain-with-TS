@@ -1,9 +1,15 @@
+import * as CryptoJS from "crypto-js";
+
 class Block {
    public index:number;
    public hash:string;
    public previousHash:string;
    public data:string;
    public timeStamp:number;
+
+   static calculateBlockHash = (index:number, previousHash:string, timeStamp:number, data:string):string => {
+      return CryptoJS.SHA256(index + previousHash + timeStamp + data).toString();
+   }
 
    constructor(index:number, hash:string, previousHash:string, data:string, timeStamp:number) {
       this.index = index;
