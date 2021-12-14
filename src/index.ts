@@ -24,7 +24,17 @@ class Block {
 const genesisBlock:Block = new Block(1, "391203933", "", "Hello", 123);
 
 // make blockchain. [Block]means array of Block. put the first Block to array of Block that is genesisBlock.
-let blockchain:[Block] = [genesisBlock];
+let blockchain:Block[] = [genesisBlock];
+
+const getBlockChain = ():Block[] => {
+   return blockchain;
+}
+
+const getLastBlock = ():Block => {
+   return blockchain[blockchain.length-1];
+}
+
+const getNewTimeStamp = ():number => Math.round(new Date().getTime() / 1000);
 
 console.log(blockchain);
 
