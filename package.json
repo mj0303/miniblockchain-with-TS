@@ -1,0 +1,24 @@
+{
+  "name": "miniblockchain-with-ts",
+  "version": "1.0.0",
+  "description": "learn TS with making mini blockchain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "prestart": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mj0303/miniblockchain-with-TS.git"
+  },
+  "author": "mj0303",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mj0303/miniblockchain-with-TS/issues"
+  },
+  "homepage": "https://github.com/mj0303/miniblockchain-with-TS#readme",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
