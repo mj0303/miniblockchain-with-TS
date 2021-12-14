@@ -11,6 +11,14 @@ class Block {
       return CryptoJS.SHA256(index + previousHash + timeStamp + data).toString();
    }
 
+   static isValidStructure = (b:Block):boolean => {
+      return (typeof b.index === "number" &&
+      typeof b.hash === "string" &&
+      typeof b.previousHash === "string" &&
+      typeof b.data === "string" &&
+      typeof b.timeStamp === "number") ? true : false;
+   }
+
    constructor(index:number, hash:string, previousHash:string, data:string, timeStamp:number) {
       this.index = index;
       this.hash = hash;
@@ -21,7 +29,7 @@ class Block {
 }
 
 // this will be the first block of blockchain.
-const genesisBlock:Block = new Block(1, "391203933", "", "Hello", 123);
+const genesisBlock:Block = new Block(0, "391203933", "", "this is first block", 0);
 
 // make blockchain. [Block]means array of Block. put the first Block to array of Block that is genesisBlock.
 let blockchain:Block[] = [genesisBlock];
@@ -36,6 +44,34 @@ const getLastBlock = ():Block => {
 
 const getNewTimeStamp = ():number => Math.round(new Date().getTime() / 1000);
 
-console.log(blockchain);
+// function that creates new block
+const createNewBlock = (data:string):Block => {
+   const previousBlock:Block = getLastBlock();
+   const newIndex:number = previousBlock.index + 1;
+   const newTimeStamp:number = getNewTimeStamp();
+   const newHash:string = Block.calculateBlockHash(newIndex, previousBlock.hash, newTimeStamp, data);
+   const newBlock:Block = new Block(newIndex, newHash, previousBlock.hash, data, newTimeStamp);
+   
+   return newBlock;
+}
+
+const getHash = (b:Block):string => {
+   return Block.calculateBlockHash(b.index, b.previousHash, b.timeStamp, b.data);
+}
+
+const isValid = (candidateBlock:Block, previousBlock:Block):boolean => {
+   if(!Block.isValidStructure(candidateBlock)) {
+      return false;
+   } else if(previousBlock.index + 1 !== candidateBlock.index) {
+      return false;
+   } else if(previousBlock.hash !== candidateBlock.previousHash) {
+      return false;
+   } else if(getHash(candidateBlock) !== candidateBlock.hash) {
+      return false;
+   } else {
+      return true;
+   }
+}
+
 
 export {};
